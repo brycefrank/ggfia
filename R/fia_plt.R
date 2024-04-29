@@ -1,19 +1,37 @@
 
+attach_subgroup_id <- function(expanded_data) {
+
+  expanded_data %>%
+    group_by(group)
+}
+
 #' Splits a set of coordinates into their subplot locations
 split_subplots <- function(data) {
-  n <- nrow(data)
+  n_elements <- length(unique(data$group))
+  n_vertices <- nrow(data) / n_elements
 
   shift <- data.frame(
-    group = c(1, 2, 3, 4),
+    subgroup = c(1, 2, 3, 4),
     diff_x = c(0, 0, 60 * sqrt(3), -60 * sqrt(3)),
     diff_y = c(0, 120, -60, -60)
   )
 
+
+  #replicated <- data %>%
+  #  slice(rep(seq(n()), 4)) %>%
+  #  mutate(group = as.integer(rep(1:4, each = n))) %>%
+  #  left_join(shift, by = "group") %>%
+  #  mutate(x = x + diff_x, y = y + diff_y)
+
   replicated <- data %>%
+    mutate(group = as.numeric(factor(group))) %>%
+    group_by(group) %>%
     slice(rep(seq(n()), 4)) %>%
-    mutate(group = as.integer(rep(1:4, each = n))) %>%
-    left_join(shift, by = "group") %>%
-    mutate(x = x + diff_x, y = y + diff_y)
+    mutate(subgroup = rep(1:4, each = n_vertices)) %>%
+    left_join(shift, by = "subgroup") %>%
+    ungroup() %>%
+    mutate(group = paste0(group, ".", subgroup), x = x + diff_x, y = y + diff_y) %>%
+    mutate(group = as.numeric(group))
 
   replicated
 }
@@ -27,9 +45,9 @@ GeomFiaPlt <- ggplot2::ggproto(
     munched <- coord_munch(coord, data, panel_params)
     munched <- munched[order(munched$group), ]
 
-    #if (!is.integer(munched$group)) {
-    #  munched$group <- match(munched$group, unique0(munched$group))
-    #}
+    if (!is.integer(munched$group)) {
+      munched$group <- match(munched$group, ggforce:::unique0(munched$group))
+    }
 
 
     first_idx <- !duplicated(munched$group)
