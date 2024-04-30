@@ -5,3 +5,7 @@ combine_aes <- function(aes1, aes2) {
   class(aes_all) <- class(aes1)
   aes_all
 }
+
+`%||%` <- function(x, y) {
+  if (is.null(x)) y else x
+}
