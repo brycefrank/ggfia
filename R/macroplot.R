@@ -1,10 +1,4 @@
 
-attach_subgroup_id <- function(expanded_data) {
-
-  expanded_data %>%
-    group_by(group)
-}
-
 #' Splits a set of coordinates into their subplot locations
 split_subplots <- function(data) {
   n_elements <- length(unique(data$group))
@@ -16,32 +10,30 @@ split_subplots <- function(data) {
     diff_y = c(0, 120, -60, -60)
   )
 
-
-  #replicated <- data %>%
-  #  slice(rep(seq(n()), 4)) %>%
-  #  mutate(group = as.integer(rep(1:4, each = n))) %>%
-  #  left_join(shift, by = "group") %>%
-  #  mutate(x = x + diff_x, y = y + diff_y)
-
   replicated <- data %>%
-    mutate(group = as.numeric(factor(group))) %>%
-    group_by(group) %>%
-    slice(rep(seq(n()), 4)) %>%
-    mutate(subgroup = rep(1:4, each = n_vertices)) %>%
-    left_join(shift, by = "subgroup") %>%
-    ungroup() %>%
-    mutate(group = paste0(group, ".", subgroup), x = x + diff_x, y = y + diff_y) %>%
-    mutate(group = as.numeric(group))
+    dplyr::mutate(group = as.numeric(factor(.data$group))) %>%
+    dplyr::group_by(.data$group) %>%
+    dplyr::slice(rep(seq(dplyr::n()), 4)) %>%
+    dplyr::mutate(subgroup = rep(1:4, each = n_vertices)) %>%
+    dplyr::left_join(shift, by = "subgroup") %>%
+    dplyr::ungroup() %>%
+    dplyr::mutate(
+      group = paste0(.data$group, ".", .data$subgroup),
+      x = .data$x + .data$diff_x, y = .data$y + .data$diff_y
+    ) %>%
+    dplyr::mutate(group = as.numeric(.data$group))
 
   replicated
 }
 
-GeomFiaPlt <- ggplot2::ggproto(
-  "GeomFiaPlt", ggforce::GeomCircle,
+GeomMacroPlot <- ggplot2::ggproto(
+  "GeomMacroPlot", ggforce::GeomCircle,
+  required_aes = ggforce::GeomCircle$required_aes,
   default_aes = ggforce::GeomCircle$default_aes,
+  setup_data = function(data, params) {
+    split_subplots(data)
+  },
   draw_panel = function(data, panel_params, coord) {
-    data <- split_subplots(data)
-
     munched <- coord_munch(coord, data, panel_params)
     munched <- munched[order(munched$group), ]
 
@@ -49,11 +41,8 @@ GeomFiaPlt <- ggplot2::ggproto(
       munched$group <- match(munched$group, ggforce:::unique0(munched$group))
     }
 
-
     first_idx <- !duplicated(munched$group)
     first_rows <- munched[first_idx, ]
-
-
 
     shapeGrob(munched$x, munched$y,
       default.units = 'native',
@@ -68,13 +57,13 @@ GeomFiaPlt <- ggplot2::ggproto(
   }
 )
 
-geom_fia_plt <- function(mapping = NULL, data = NULL, stat = "circle",
+geom_macroplot <- function(mapping = NULL, data = NULL, stat = "circle",
   position = "identity", n = 360, expand = 0, radius = 0, na.rm = FALSE,
   show.legend = NA, inherit.aes = TRUE, ...
 ) {
 
   ggplot2::layer(
-    data = data, mapping = mapping, stat = stat, geom = GeomFiaPlt,
+    data = data, mapping = mapping, stat = stat, geom = GeomMacroPlot,
     position = position, show.legend = show.legend, inherit.aes = inherit.aes,
     params = rlang::list2(n = n, na.rm = na.rm, ...)
   )
