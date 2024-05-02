@@ -38,8 +38,9 @@ Note that we use the term “midplot” to avoid conflating with “subplot”,
 which refers to a relative plot position index.
 
 ``` r
-ggplot() +
-  geom_midplot()
+ggplot(plot_coord, aes(x0 = x0, y0 = y0)) +
+  geom_midplot() +
+  coord_equal()
 ```
 
 ![](README_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
