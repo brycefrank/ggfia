@@ -18,6 +18,12 @@ In general, users need only define the coordinates of the plot centers,
 given in a dataframe as `x0` and `y0` columns. Future geoms will allow users to
 independently position subplots.
 
+To install:
+
+```{r eval=FALSE}
+devtools::install_github("brycefrank/ggfia")
+```
+
 - Compose an FIA plot resembling the Bechtold and Patterson (2005) diagram
 
 ```{r}
