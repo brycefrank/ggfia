@@ -20,7 +20,8 @@ split_subplots <- function(data) {
       group = paste0(.data$group, ".", .data$subgroup),
       x = .data$x + .data$diff_x, y = .data$y + .data$diff_y
     ) %>%
-    dplyr::mutate(group = as.numeric(.data$group))
+    dplyr::mutate(group = as.numeric(.data$group)) %>%
+    as.data.frame()
 
   replicated
 }
