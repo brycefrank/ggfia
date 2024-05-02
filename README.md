@@ -1,9 +1,15 @@
 
 # ggfia
 
-`ggfia` provides easy to use functions to display FIA plots with
-`ggplot2`. `ggfia` is currently in development, with some ideas for
-functionality given below.
+`ggfia` provides several `ggplot2` geoms that can be used to rapidly
+compose FIA plot diagrams, which can be used for presentations,
+documentation and other purposes. Users are free to add other `ggplot2`
+geoms on top of `ggfia` geoms to create expressive and useful FIA plot
+diagrams.
+
+In general, users need only define the coordinates of the plot centers,
+given in a dataframe as `x0` and `y0` columns. Future geoms will allow
+users to independently position subplots.
 
 - Compose an FIA plot resembling the Bechtold and Patterson (2005)
   diagram
@@ -24,7 +30,7 @@ ggplot(plot_coord, aes(x0 = x0, y0 = y0)) +
   coord_equal()
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-1-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
 
 - Display only the midplot
 
@@ -48,7 +54,7 @@ ggplot(multi_plot_coords, aes(x0 = x0, y0 = y0)) +
   coord_equal()
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
 
 - Apply colors and facets
 
@@ -56,12 +62,12 @@ ggplot(multi_plot_coords, aes(x0 = x0, y0 = y0)) +
 multi_plot_coords$my_group <- factor(1:9)
 
 ggplot(multi_plot_coords) +
-  geom_macroplot(aes(x0 = x0, y0 = y0, color = my_group)) +
+  geom_macroplot(aes(x0 = x0, y0 = y0, color = my_group), fill = "gray") +
   facet_wrap(~my_group) +
   coord_equal()
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
 
 - Display other geoms over the plot
 
@@ -74,4 +80,4 @@ ggplot() +
   coord_equal()
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
