@@ -37,8 +37,12 @@ ggplot(plot_coord, aes(x0 = x0, y0 = y0)) +
 Note that we use the term “midplot” to avoid conflating with “subplot”,
 which refers to a relative plot position index.
 
-    ggplot() +
-      geom_midplot()
+``` r
+ggplot() +
+  geom_midplot()
+```
+
+![](README_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
 
 - Display multiple plot diagrams
 
@@ -54,7 +58,7 @@ ggplot(multi_plot_coords, aes(x0 = x0, y0 = y0)) +
   coord_equal()
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
 
 - Apply colors and facets
 
@@ -67,7 +71,7 @@ ggplot(multi_plot_coords) +
   coord_equal()
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
 
 - Display other geoms over the plot
 
@@ -80,4 +84,4 @@ ggplot() +
   coord_equal()
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
