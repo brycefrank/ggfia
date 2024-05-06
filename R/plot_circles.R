@@ -3,7 +3,7 @@ GeomPlotCircles <- ggplot2::ggproto(
   required_aes = ggforce::GeomCircle$required_aes,
   default_aes = combine_aes(
     ggforce::GeomCircle$default_aes,
-    aes(subp = list(c(1, 2, 3, 4)))
+    ggplot2::aes(subp = list(c(1, 2, 3, 4)))
   ),
   setup_data = function(data, params) {
     split_circles(data)

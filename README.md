@@ -32,8 +32,6 @@ ggplot(plot_coord, aes(x0 = x0, y0 = y0)) +
   geom_macroplot(linetype = "dashed") +
   geom_midplot() +
   geom_microplot() +
-  geom_subp_center() +
-  geom_subp_line() +
   coord_equal()
 ```
 
