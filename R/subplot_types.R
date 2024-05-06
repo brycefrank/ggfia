@@ -13,8 +13,8 @@ StatMacroplot <- ggplot2::ggproto(
 #'
 #' @export
 geom_macroplot <- function(mapping = NULL, data = NULL,
-  stat = StatMacroplot, position = "identity", n = 360, expand = 0,
-  radius = 0, na.rm = FALSE, show.legend = NA, inherit.aes = TRUE, ...
+  stat = StatMacroplot, position = "identity", n = 360, na.rm = FALSE,
+  show.legend = NA, inherit.aes = TRUE, ...
 ) {
 
   ggplot2::layer(
@@ -40,8 +40,8 @@ StatMidplot <- ggplot2::ggproto(
 #'
 #' @export
 geom_midplot <- function(mapping = NULL, data = NULL,
-  stat = StatMidplot, position = "identity", n = 360, expand = 0,
-  radius = 0, na.rm = FALSE, show.legend = NA, inherit.aes = TRUE, ...
+  stat = StatMidplot, position = "identity", n = 360, na.rm = FALSE,
+  show.legend = NA, inherit.aes = TRUE, ...
 ) {
 
   ggplot2::layer(
@@ -68,7 +68,7 @@ StatMicroplot <- ggplot2::ggproto(
 #' @export
 geom_microplot <- function(mapping = NULL, data = NULL,
   stat = StatMicroplot, position = "identity", n = 360, expand = 0,
-  radius = 0, na.rm = FALSE, show.legend = NA, inherit.aes = TRUE, ...
+  na.rm = FALSE, show.legend = NA, inherit.aes = TRUE, ...
 ) {
 
   ggplot2::layer(

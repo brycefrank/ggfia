@@ -59,7 +59,7 @@ split_circles <- function(data) {
 }
 
 #' Splits points into the FIA arrangement
-#' 
+#'
 #' This function ingests point data from `setup_data()`, replicates each point
 #' four times and positions them relative to plot center.
 #'
