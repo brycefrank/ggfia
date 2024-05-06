@@ -1,7 +1,10 @@
 GeomPlotCircles <- ggplot2::ggproto(
   "GeomPlotCircles", ggforce::GeomCircle,
   required_aes = ggforce::GeomCircle$required_aes,
-  default_aes = ggforce::GeomCircle$default_aes,
+  default_aes = combine_aes(
+    ggforce::GeomCircle$default_aes,
+    aes(subp = list(c(1, 2, 3, 4)))
+  ),
   setup_data = function(data, params) {
     split_circles(data)
   }
@@ -16,10 +19,10 @@ GeomPlotCircles <- ggplot2::ggproto(
 #'
 #' @export
 geom_plot_circles <- function(mapping = NULL, data = NULL,
-  stat = ggforce::StatCircle, position = "identity", n = 360, expand = 0,
-  radius = 0, na.rm = FALSE, show.legend = NA, inherit.aes = TRUE, ...
+  stat = ggforce::StatCircle, position = "identity", n = 360,
+  na.rm = FALSE, show.legend = NA, inherit.aes = TRUE, ...
 ) {
-  # FIXME some aesthetics should not be possible (e.g., position_jitter does
+  # TODO some aesthetics should not be possible (e.g., position_jitter does
   # not work)
   ggplot2::layer(
     data = data, mapping = mapping, stat = stat, geom = GeomPlotCircles,

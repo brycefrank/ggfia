@@ -18,10 +18,23 @@ split_coords <- function(data) {
     dplyr::ungroup() %>%
     dplyr::mutate(
       group = paste0(.data$group, ".", .data$subgroup),
-      x = .data$x + .data$diff_x, y = .data$y + .data$diff_y
+      x = .data$x + .data$diff_x,
+      y = .data$y + .data$diff_y
     ) %>%
     dplyr::mutate(group = as.numeric(.data$group)) %>%
     as.data.frame()
+}
+
+filter_subplots <- function(data) {
+  if(is.null(data$subp)) {
+    return(data)
+  } else {
+    data <- data %>%
+      dplyr::rowwise() %>%
+      dplyr::filter(.data$subgroup %in% subp) %>%
+      dplyr::ungroup() %>%
+      as.data.frame()
+  }
 }
 
 #' Splits circles into the FIA arrangement
@@ -41,7 +54,8 @@ split_circles <- function(data) {
     dplyr::group_by(.data$group) %>%
     dplyr::slice(rep(seq_len(dplyr::n()), 4)) %>%
     dplyr::mutate(subgroup = rep(1:4, each = n_vertices)) %>%
-    split_coords()
+    split_coords() %>%
+    filter_subplots()
 }
 
 #' Splits points into the FIA arrangement
