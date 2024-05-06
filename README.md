@@ -11,6 +11,12 @@ In general, users need only define the coordinates of the plot centers,
 given in a dataframe as `x0` and `y0` columns. Future geoms will allow
 users to independently position subplots.
 
+To install:
+
+``` r
+devtools::install_github("brycefrank/ggfia")
+```
+
 - Compose an FIA plot resembling the Bechtold and Patterson (2005)
   diagram
 
@@ -27,10 +33,11 @@ ggplot(plot_coord, aes(x0 = x0, y0 = y0)) +
   geom_midplot() +
   geom_microplot() +
   geom_subp_center() +
+  geom_subp_line() +
   coord_equal()
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
 
 - Display only the midplot
 
@@ -43,7 +50,7 @@ ggplot(plot_coord, aes(x0 = x0, y0 = y0)) +
   coord_equal()
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
 
 - Display multiple plot diagrams
 
@@ -59,7 +66,7 @@ ggplot(multi_plot_coords, aes(x0 = x0, y0 = y0)) +
   coord_equal()
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
 
 - Apply colors and facets
 
@@ -72,7 +79,7 @@ ggplot(multi_plot_coords) +
   coord_equal()
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
 
 - Display other geoms over the plot
 
@@ -85,4 +92,4 @@ ggplot() +
   coord_equal()
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->

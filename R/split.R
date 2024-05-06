@@ -1,5 +1,5 @@
 #' The relative positions of subplots
-#' 
+#'
 #' @keywords internal
 split_pos <- data.frame(
   subgroup = c(1, 2, 3, 4),
@@ -58,4 +58,27 @@ split_points <- function(data) {
     dplyr::slice(rep(seq_len(dplyr::n()), 4)) %>%
     dplyr::mutate(subgroup = 1:4) %>%
     split_coords()
+}
+
+
+#' Splits points into lines connecting to the outer subplots
+#'
+#' This function ingests point data from `setup_data()` and creates three
+#' lines originating from splot center to each of the outer subplots.
+#'
+#' @keywords internal
+split_points_to_lines <- function(data) {
+  split_subp_centers <- split_points(data)
+
+  # Parition into the center and outer data
+  center_data <- split_subp_centers %>%
+    dplyr::filter(.data$subgroup == 1)
+
+  outer_data <- split_subp_centers %>%
+    dplyr::filter(.data$subgroup != 1) %>%
+    dplyr::rename(xend = .data$x, yend = .data$y) %>%
+    dplyr::select(-c(PANEL, group, subgroup, diff_x, diff_y))
+
+  center_data %>%
+    dplyr::left_join(outer_data, by = c("id"))
 }
