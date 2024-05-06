@@ -71,7 +71,8 @@ split_points <- function(data) {
     dplyr::group_by(.data$id) %>%
     dplyr::slice(rep(seq_len(dplyr::n()), 4)) %>%
     dplyr::mutate(subgroup = 1:4) %>%
-    split_coords()
+    split_coords() %>%
+    filter_subplots()
 }
 
 
